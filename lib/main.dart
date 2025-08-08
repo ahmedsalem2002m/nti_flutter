@@ -42,116 +42,35 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Form(
-          key: formKey,
-          child: Column(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox.expand(
+            child: Image.asset("assets/images/eat.jpg", fit: BoxFit.cover),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(
-                child: Container(
-                  margin: EdgeInsets.all(8),
-                  width: 300,
-                  height: 100,
-                  child: Image.asset("assets/images/eat.jpg"),
+              Text(
+                "Ahmed",
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
-              Text("Ahmed Salem"),
-              Switch(
-                splashRadius: 100,
-                value: switchValue,
-                onChanged: (value) {
-                  setState(() {
-                    switchValue = value;
-                    if(value == true){
-                      exit(0);
-                    }
-                  });
-                  print(value);
-                },
-              ),
-              // SwitchListTile(
-              //   value: switchValue,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       switchValue = value;
-              //     });
-              //     print(value);
-              //   },
-              // ),
-              // CheckboxListTile(value: switchValue, onChanged: (value) {
-              //   setState(() {
-              //     switchValue = value!;
-              //   });
-              //   print(value);
-              // }),
-              TextFormField(
-                controller: email,
-                validator: (value) {
-                  if (value != null && value.isNotEmpty) {
-                    return null;
-                  }
-                  return "field is required";
-                },
-                keyboardType: TextInputType.name,
-                style: TextStyle(fontSize: 12),
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.email),
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.lock),
-                  ),
-                  labelText: "Enter email",
-                  border: OutlineInputBorder(),
+              Text(
+                "Ali",
+                style: TextStyle(
+                  color: Colors.teal,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
-              DropdownButtonFormField(
-                items: countriesCodes
-                    .map(
-                      (String countryName, countryCode) =>
-                      MapEntry(
-                        countryName,
-                        DropdownMenuItem(
-                          value: countryCode,
-                          child: Row(
-                            children: [Text(countryName), Text(countryCode)],
-                          ),
-                        ),
-                      ),
-                )
-                    .values
-                    .toList(),
-                onChanged: (value) {
-                  // setState(() {
-                  dropdown = value;
-                  // });
-                  print(value);
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {});
-                  formKey.currentState!.validate();
-                  print(email.text);
-                },
-                child: Text("press"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              SizedBox(height: 20),
-              Column(
-                children: [
-                  Text("Email: ${email.text}"),
-                  Text("Drop:  ${dropdown}"),
-                ],
-              ),
+
             ],
           ),
-        ),
+        ],
       ),
     );
   }
