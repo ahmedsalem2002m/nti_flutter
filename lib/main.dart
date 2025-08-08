@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,9 +20,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   Map<String, String> countriesCodes = {
     'Egypt': '+20',
     'KSA': '+966',
@@ -28,6 +35,9 @@ class HomeView extends StatelessWidget {
   };
   TextEditingController email = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  String? dropdown;
+
+  bool switchValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +53,39 @@ class HomeView extends StatelessWidget {
                 child: Container(
                   margin: EdgeInsets.all(8),
                   width: 300,
-                  height: 250,
+                  height: 100,
                   child: Image.asset("assets/images/eat.jpg"),
                 ),
               ),
               Text("Ahmed Salem"),
+              Switch(
+                splashRadius: 100,
+                value: switchValue,
+                onChanged: (value) {
+                  setState(() {
+                    switchValue = value;
+                    if(value == true){
+                      exit(0);
+                    }
+                  });
+                  print(value);
+                },
+              ),
+              // SwitchListTile(
+              //   value: switchValue,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       switchValue = value;
+              //     });
+              //     print(value);
+              //   },
+              // ),
+              // CheckboxListTile(value: switchValue, onChanged: (value) {
+              //   setState(() {
+              //     switchValue = value!;
+              //   });
+              //   print(value);
+              // }),
               TextFormField(
                 controller: email,
                 validator: (value) {
@@ -71,29 +109,30 @@ class HomeView extends StatelessWidget {
               DropdownButtonFormField(
                 items: countriesCodes
                     .map(
-                      (String countryName, countryCode) => MapEntry(
+                      (String countryName, countryCode) =>
+                      MapEntry(
                         countryName,
                         DropdownMenuItem(
                           value: countryCode,
                           child: Row(
-                            children: [
-                              Icon(Icons.flag),
-                              Text(countryName),
-                              Text(countryCode),
-                            ],
+                            children: [Text(countryName), Text(countryCode)],
                           ),
                         ),
                       ),
-                    )
+                )
                     .values
                     .toList(),
                 onChanged: (value) {
+                  // setState(() {
+                  dropdown = value;
+                  // });
                   print(value);
                 },
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
+                  setState(() {});
                   formKey.currentState!.validate();
                   print(email.text);
                 },
@@ -102,6 +141,13 @@ class HomeView extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                 ),
+              ),
+              SizedBox(height: 20),
+              Column(
+                children: [
+                  Text("Email: ${email.text}"),
+                  Text("Drop:  ${dropdown}"),
+                ],
               ),
             ],
           ),
